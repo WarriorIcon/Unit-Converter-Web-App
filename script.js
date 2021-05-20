@@ -8,7 +8,7 @@ celsiusInput.addEventListener('input', e => {
   celsiusFormula.innerText = celsiusInput.value;
   const celsiusNumber = parseFloat(celsiusInput.value);
   fahrenheitInput.value = (celsiusNumber * 9 / 5) + 32;
-  fahrenheitFormula.innerText = fahrenheitInput.value;
+  fahrenheitFormula.innerHTML = `${fahrenheitInput.value}<strong>°F</strong>`;
   
 })
 
