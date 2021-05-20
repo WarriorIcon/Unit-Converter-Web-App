@@ -9,22 +9,26 @@
 	<title>Temperature Conversion C to F</title>
 </head>
 <body>
-	<form action="#">
 		<div class="form-container">
-			<div class="input-container">
-				<div class="input-column">
-					<input type="text" name="celsius" id="celsius" value="">
-					<label class="input-labels" for="celsius">Celsius</label>
-				</div>
+			<form action="#">
+				<div class="input-container">
+					<div class="input-column">
+						<input type="text" name="celsius" id="celsius" value="0">
+						<label class="input-labels" for="celsius">Celsius</label>
+					</div>
+			</div>
+				<div class="equals">=</div>
+				<div class="input-container">
+					<div class="input-column">
+						<input type="text" name="fahrenheit" id="fahrenheit">
+						<label for="fahrenheit">Fahrenheit</label>
+					</div>
+			</div>
+			</form>
+			<div class="formula-info">
+				<p><span class="formula-highlight">Formula:</span> (<span class="celsius">0</span>°C × 9/5) + 32 = <span class="fahrenheit">91.4°F</span></p>
+			</div>
 		</div>
-			<div class="equals">=</div>
-			<div class="input-container">
-				<div class="input-column">
-					<input type="text" name="fahrenheit" id="fahrenheit">
-					<label for="fahrenheit">Fahrenheit</label>
-				</div>
-		</div>
-	</div>
-	</form>
+
 </body>
 </html>

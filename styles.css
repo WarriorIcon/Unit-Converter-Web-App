@@ -3,17 +3,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* align-items: center; */
     height: 75vh;
     
 }
 
 .form-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 800px;
+    align-items: center;
+    width: 600px;
+    height: 300px;
     border: 1px solid #dfe1e5;
     border-radius: 8px;
-    padding: 100px;
+    padding: 50px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .input-container {
@@ -41,12 +52,24 @@ label {
 }
 
 .equals {
-    /* display: inline-block; */
-    display: flex;
+    display: inline-block;
     align-items: center;
     padding: 3px;
     margin: 3px;
     font-size: 36px;
     color: black;
     font-weight: bold;
+}
+
+.formula-info {
+    display:flex;
+    align-self:flex-start;
+    padding-left: 10px;
+}
+
+.formula-highlight {
+    background-color: #F9AB00;
+    border-radius: 2px;
+    color: white;
+    padding: 1px 3px 1.5px 3px;
 }
