@@ -13,12 +13,12 @@ celsiusInput.addEventListener('input', e => {
 })
 
 fahrenheitInput.addEventListener('input', e => {
-  const fahrenheitNumber = parseFloat(fahrenheitInput.value)
-  celsiusInput.value = Math.round((fahrenheitNumber - 32) * 5 / 9);
-  const celsiusNumber = celsiusInput.value
-  celsiusInput.value = celsiusNumber;
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
-  celsiusFormula.innerText = `${celsiusInput.value}`
+  const fahrenheitNumber = parseFloat(fahrenheitInput.value)
+  celsiusInput.value = (fahrenheitNumber - 32) * 5 / 9;
+  // const celsiusNumber = parseFloat(celsiusInput.value.toFixed(3))
+  const celsiusNumber  = celsiusInput.value;
+  celsiusFormula.innerText = `${celsiusNumber}`
 })
 
 // (°F − 32) × 5/9 = °C
