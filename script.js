@@ -15,7 +15,9 @@ celsiusInput.addEventListener('input', e => {
 fahrenheitInput.addEventListener('input', e => {
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   const fahrenheitNumber = parseFloat(fahrenheitInput.value)
-  celsiusInput.value = (fahrenheitNumber - 32) * 5 / 9;
+  celsiusInput.value = ((fahrenheitNumber - 32) * 5 / 9).toFixed(3);
+  // if the result has no decimal points, don't display them
+  if (celsiusInput.value == 0 ) { celsiusInput.value = "0"}
   // const celsiusNumber = parseFloat(celsiusInput.value.toFixed(3))
   const celsiusNumber  = celsiusInput.value;
   celsiusFormula.innerText = `${celsiusNumber}`
