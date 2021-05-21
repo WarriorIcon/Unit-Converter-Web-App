@@ -25,10 +25,6 @@ fahrenheitInput.addEventListener('input', e => {
 
 // (°F − 32) × 5/9 = °C
 
-//just checking if
-///this code 
-// counts as javascript % 
-// of the file on
-// github
+//just checking if///this code // counts as javascript % // of the file on// github
 
 
