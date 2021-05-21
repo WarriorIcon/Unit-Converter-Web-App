@@ -15,16 +15,21 @@ celsiusInput.addEventListener('input', e => {
 fahrenheitInput.addEventListener('input', e => {
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   const fahrenheitNumber = parseFloat(fahrenheitInput.value)
-  celsiusInput.value = ((fahrenheitNumber - 32) * 5 / 9).toFixed(3);
-  // if the result has no decimal points, don't display them
-  if (celsiusInput.value == 0 ) { celsiusInput.value = "0"}
-  // const celsiusNumber = parseFloat(celsiusInput.value.toFixed(3))
-  const celsiusNumber  = celsiusInput.value;
-  celsiusFormula.innerText = `${celsiusNumber}`
+  // Display a maximum of 3 decimal points celsius and if the result has no decimal points, don't display them.
+  celsiusInput.value = parseFloat(((fahrenheitNumber - 32) * 5 / 9).toFixed(3));
+  // Check if input is not a NaN. If NaN display nothing instead of NaN. Check that numbers were input with regex
+  const regex = /^[0-9]+$/;
+  if (!isNaN(celsiusInput.value) /*&& celsiusInput.value.match(regex)*/ ) {
+    const celsiusNumber = celsiusInput.value;
+    celsiusFormula.innerText = `${celsiusInput.value}`
+  } else { 
+    celsiusInput.value = "" 
+    celsiusFormula.innerText = `${""}`
+  }
+
 })
 
 // (°F − 32) × 5/9 = °C
 
-//just checking if///this code // counts as javascript % // of the file on// github
 
 
