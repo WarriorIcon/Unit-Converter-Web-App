@@ -3,6 +3,14 @@ const celsiusInput = document.getElementById('celsius')
 const celsiusFormula = document.querySelector('.celsius')
 const fahrenheitInput = document.getElementById('fahrenheit')
 const fahrenheitFormula = document.querySelector('.fahrenheit')
+const celsiusDropDown = document.querySelector('.celsius-drop-down') 
+const fahrenheitDropDown = document.querySelector('.fahrenheit-drop-down');
+
+celsiusDropDown.addEventListener('change', e => {
+  if (celsiusDropDown.selectedIndex == 0) {
+    console.log("Celsius is selected on the dropdown.")
+  } else console.log("fahrenheit is selected")
+});
 
 celsiusInput.addEventListener('input', e => {
 
@@ -17,7 +25,7 @@ celsiusInput.addEventListener('input', e => {
   } else { 
     fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   }
-  if(isNaN(celsiusInput.value)) {
+  if (isNaN(celsiusInput.value)) {
     celsiusFormula.innerText = "";
     fahrenheitFormula.innerText = "";
     fahrenheitInput.value= "";
