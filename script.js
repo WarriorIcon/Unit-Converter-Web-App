@@ -1,19 +1,32 @@
 // document.getElementById('celsius').value="0"
-const celsiusInput = document.getElementById('celsius-input')
+let celsiusInput = document.getElementById('celsius-input')
+let fahrenheitInput = document.getElementById('fahrenheit-input')
 const celsiusFormula = document.querySelector('.celsius')
-const fahrenheitInput = document.getElementById('fahrenheit-input')
 const fahrenheitFormula = document.querySelector('.fahrenheit')
 const celsiusDropDown = document.querySelector('.celsius-drop-down') 
 const fahrenheitDropDown = document.querySelector('.fahrenheit-drop-down');
 
+// Swap C & F inputs via Celsius drop-down select
 celsiusDropDown.addEventListener('change', (e) => {
+  //selected celsius on celsius dropdown select
   if (celsiusDropDown.selectedIndex == 0) {
     console.log("Celsius is selected on the dropdown.")
-  } else console.log("fahrenheit is selected")
-  celsiusInput.classList.replace('celsius-input', 'fahrenheit-input')
-  fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
+    celsiusInput.setAttribute('id', 'celsius-input')
+    fahrenheitDropDown.selectedIndex = 0;
+    //selected fahrenheit on celsius dropdown
+  } else {
+  console.log("fahrenheit is selected")
+  fahrenheitDropDown.selectedIndex = 1
+  celsiusInput.setAttribute('id', 'fahrenheit-input')
+  celsiusInput = document.getElementById('fahrenheit-input')  
+  fahrenheitInput.setAttribute('id', 'celsius-input')
+  fahrenheitInput = document.getElementById('celsius-input')
+  }
+  // celsiusInput.classList.replace('celsius-input', 'fahrenheit-input')
+  // fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
 });
 
+// Listen for Celsius Inputs
 celsiusInput.addEventListener('input', e => {
 
   celsiusFormula.innerText = celsiusInput.value;
@@ -34,6 +47,7 @@ celsiusInput.addEventListener('input', e => {
   }
 })
 
+// Listen for Fahrenheit Input
 fahrenheitInput.addEventListener('input', e => {
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   const fahrenheitNumber = parseFloat(fahrenheitInput.value)
