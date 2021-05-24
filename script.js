@@ -1,15 +1,17 @@
 // document.getElementById('celsius').value="0"
-const celsiusInput = document.getElementById('celsius')
+const celsiusInput = document.getElementById('celsius-input')
 const celsiusFormula = document.querySelector('.celsius')
-const fahrenheitInput = document.getElementById('fahrenheit')
+const fahrenheitInput = document.getElementById('fahrenheit-input')
 const fahrenheitFormula = document.querySelector('.fahrenheit')
 const celsiusDropDown = document.querySelector('.celsius-drop-down') 
 const fahrenheitDropDown = document.querySelector('.fahrenheit-drop-down');
 
-celsiusDropDown.addEventListener('change', e => {
+celsiusDropDown.addEventListener('change', (e) => {
   if (celsiusDropDown.selectedIndex == 0) {
     console.log("Celsius is selected on the dropdown.")
   } else console.log("fahrenheit is selected")
+  celsiusInput.classList.replace('celsius-input', 'fahrenheit-input')
+  fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
 });
 
 celsiusInput.addEventListener('input', e => {
