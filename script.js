@@ -6,13 +6,23 @@ const fahrenheitFormula = document.querySelector('.fahrenheit')
 const celsiusDropDown = document.querySelector('.celsius-drop-down') 
 const fahrenheitDropDown = document.querySelector('.fahrenheit-drop-down');
 
-// Swap C & F inputs via Celsius drop-down select
-celsiusDropDown.addEventListener('change', (e) => {
+const handleDropdownChange = (e,dropdownElement,otherDropdownElement) => {
   //selected celsius on celsius dropdown select
-  if (celsiusDropDown.selectedIndex == 1) {
+  if (dropdownElement.selectedIndex == 1) {
     console.log("fahrenheit is selected")
-    fahrenheitDropDown.selectedIndex = 1
-    // swap inputs
+    otherDropdownElement.selectedIndex = 1;    
+    //selected fahrenheit on celsius dropdown
+  } else {
+    console.log("Celsius is selected on the first dropdown.")
+    // swap drop-down selects
+    otherDropdownElement.selectedIndex = 0;
+    // restore inputs
+    // celsiusInput.setAttribute('id', 'celsius-input')
+    // celsiusInput = document.getElementById('celsius-input')
+    // fahrenheitInput.setAttribute('id', 'fahrenheit-input')
+    // fahrenheitInput = document.getElementById('fahrenheit-input')
+  }
+   // swap inputs
     celsiusInput.setAttribute('id', 'fahrenheit-input')
     celsiusInput.setAttribute('name', 'fahrenheit')
     fahrenheitInput.setAttribute('id', 'celsius-input')
@@ -27,22 +37,12 @@ celsiusDropDown.addEventListener('change', (e) => {
     celsiusInput.addEventListener('input', handleCelsiusInput);
     fahrenheitInput.addEventListener('input', handleFahrenheitInput);
 
-    
-    //selected fahrenheit on celsius dropdown
-  } else {
-    console.log("Celsius is selected on the first dropdown.")
-    // swap drop-down selects
-    fahrenheitDropDown.selectedIndex = 0;
-    // restore inputs
-    celsiusInput.setAttribute('id', 'celsius-input')
-    celsiusInput = document.getElementById('celsius-input')
-    fahrenheitInput.setAttribute('id', 'fahrenheit-input')
-    fahrenheitInput = document.getElementById('fahrenheit-input')
-  }
   // celsiusInput.classList.replace('celsius-input', 'fahrenheit-input')
   // fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
-});
-
+}
+// Swap C & F inputs via Celsius drop-down select
+celsiusDropDown.addEventListener('change', e=>handleDropdownChange(e,celsiusDropDown,fahrenheitDropDown));
+fahrenheitDropDown.addEventListener('change', e=>handleDropdownChange(e,fahrenheitDropDown,celsiusDropDown));
 const handleCelsiusInput = e => {
   celsiusFormula.innerText = celsiusInput.value;
   const celsiusNumber = parseFloat(celsiusInput.value);
