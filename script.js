@@ -14,13 +14,23 @@ celsiusDropDown.addEventListener('change', (e) => {
     fahrenheitDropDown.selectedIndex = 1
     // swap inputs
     celsiusInput.setAttribute('id', 'fahrenheit-input')
-    celsiusInput = document.getElementById('fahrenheit-input')  
+    celsiusInput.setAttribute('name', 'fahrenheit')
     fahrenheitInput.setAttribute('id', 'celsius-input')
-    fahrenheitInput = document.getElementById('celsius-input')
-    //    
+    fahrenheitInput.setAttribute('name', 'celsius')
+    // Remove Event listeners on inputs
+    celsiusInput.removeEventListener('input', handleCelsiusInput);
+    fahrenheitInput.removeEventListener('input', handleFahrenheitInput);
+
+    celsiusInput = document.getElementById('celsius-input')  
+    fahrenheitInput = document.getElementById('fahrenheit-input')
+    // Set Event listeners on inputs
+    celsiusInput.addEventListener('input', handleCelsiusInput);
+    fahrenheitInput.addEventListener('input', handleFahrenheitInput);
+
+    
     //selected fahrenheit on celsius dropdown
   } else {
-    console.log("Celsius is selected on the dropdown.")
+    console.log("Celsius is selected on the first dropdown.")
     // swap drop-down selects
     fahrenheitDropDown.selectedIndex = 0;
     // restore inputs
@@ -33,9 +43,7 @@ celsiusDropDown.addEventListener('change', (e) => {
   // fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
 });
 
-// Listen for Celsius Inputs
-celsiusInput.addEventListener('input', e => {
-
+const handleCelsiusInput = e => {
   celsiusFormula.innerText = celsiusInput.value;
   const celsiusNumber = parseFloat(celsiusInput.value);
   fahrenheitInput.value = (celsiusNumber * 9 / 5) + 32;
@@ -52,10 +60,9 @@ celsiusInput.addEventListener('input', e => {
     fahrenheitFormula.innerText = "";
     fahrenheitInput.value= "";
   }
-})
+}
 
-// Listen for Fahrenheit Input
-fahrenheitInput.addEventListener('input', e => {
+const handleFahrenheitInput = e => {
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   const fahrenheitNumber = parseFloat(fahrenheitInput.value)
   // Display a maximum of 3 decimal points celsius and if the result has no decimal points, don't display them.
@@ -73,9 +80,12 @@ fahrenheitInput.addEventListener('input', e => {
     celsiusInput.value = "";
     celsiusFormula.innerText = "";
   }
-})
+}
+// Listen for Celsius Inputs
+celsiusInput.addEventListener('input', handleCelsiusInput);
+
+// Listen for Fahrenheit Input
+fahrenheitInput.addEventListener('input', handleFahrenheitInput);
 
 // (°F − 32) × 5/9 = °C
-
-
 
