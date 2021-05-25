@@ -13,20 +13,13 @@ const dropDownHandler = (e, dropDownElement, otherDropDownElement) => {
   if (dropDownElement.selectedIndex == 1) {
     console.log("fahrenheit is selected on the first dropdown")
     otherDropDownElement.selectedIndex = 1;
-    // live flip the input values. // I would like to make this its own function DRY
-    const temp = celsiusInput.value
-    celsiusInput.value = fahrenheitInput.value
-    fahrenheitInput.value = temp 
     //first drop-down has fahrenheit selected
   } else {
     console.log("Celsius is selected on the first dropdown")
-        // live flip the input values. // I would like to make this its own function DRY
-    const temp = celsiusInput.value
-    celsiusInput.value = fahrenheitInput.value
-    fahrenheitInput.value = temp 
     // swap drop-down selects
     otherDropDownElement.selectedIndex = 0;
-  }
+  } // live flip the input values. 
+  flipValues(celsiusInput, fahrenheitInput)
   // swap inputs
   celsiusInput.setAttribute('id', 'fahrenheit-input')
   // celsiusInput = document.getElementById('fahrenheit-input')
@@ -95,11 +88,10 @@ fahrenheitInput.addEventListener('input', handleFahrenheitInput);
 // (°F − 32) × 5/9 = °C
 
 //working on a function to flip values
-// function flipValues(firstValue, secondValue) {
-//   console.log("called this function")
-//   // let temp = firstValue;
-//   // firstValue = secondValue;
-//   // secondValue = temp;
-//   // console.log(firstValue, secondValue)  
-// }
+function flipValues(firstElement, secondElement) {
+  let temp = firstElement.value
+  firstElement.value = secondElement.value
+  secondElement.value = temp
+  console.log("This flip function worked")
+}
 
