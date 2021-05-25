@@ -1,4 +1,5 @@
-// document.getElementById('celsius').value="0"
+// still to do, 1. change the formula on input change, 2. add new drop-down for cm to inches, 3. refactor for drop-down larger than 3
+
 let celsiusInput = document.getElementById('celsius-input')
 let fahrenheitInput = document.getElementById('fahrenheit-input')
 const celsiusFormula = document.querySelector('.celsius')
@@ -6,36 +7,47 @@ const fahrenheitFormula = document.querySelector('.fahrenheit')
 const celsiusDropDown = document.querySelector('.celsius-drop-down') 
 const fahrenheitDropDown = document.querySelector('.fahrenheit-drop-down');
 
-// Swap C & F inputs via Celsius drop-down select
-celsiusDropDown.addEventListener('change', (e) => {
-  //selected celsius on celsius dropdown select
-  if (celsiusDropDown.selectedIndex == 1) {
-    console.log("fahrenheit is selected")
-    fahrenheitDropDown.selectedIndex = 1
-    // swap inputs
-    celsiusInput.setAttribute('id', 'fahrenheit-input')
-    celsiusInput = document.getElementById('fahrenheit-input')  
-    fahrenheitInput.setAttribute('id', 'celsius-input')
-    fahrenheitInput = document.getElementById('celsius-input')
-    //    
-    //selected fahrenheit on celsius dropdown
+// Create function to handle drop-down select changes
+const dropDownHandler = (e, dropDownElement, otherDropDownElement) => {
+  //selected fahreneit on 1st dropdown select
+  if (dropDownElement.selectedIndex == 1) {
+    console.log("fahrenheit is selected on the first dropdown")
+    otherDropDownElement.selectedIndex = 1;
+    // live flip the input values. // I would like to make this its own function DRY
+    const temp = celsiusInput.value
+    celsiusInput.value = fahrenheitInput.value
+    fahrenheitInput.value = temp 
+    //first drop-down has fahrenheit selected
   } else {
-    console.log("Celsius is selected on the dropdown.")
+    console.log("Celsius is selected on the first dropdown")
+        // live flip the input values. // I would like to make this its own function DRY
+    const temp = celsiusInput.value
+    celsiusInput.value = fahrenheitInput.value
+    fahrenheitInput.value = temp 
     // swap drop-down selects
-    fahrenheitDropDown.selectedIndex = 0;
-    // restore inputs
-    celsiusInput.setAttribute('id', 'celsius-input')
-    celsiusInput = document.getElementById('celsius-input')
-    fahrenheitInput.setAttribute('id', 'fahrenheit-input')
-    fahrenheitInput = document.getElementById('fahrenheit-input')
+    otherDropDownElement.selectedIndex = 0;
   }
-  // celsiusInput.classList.replace('celsius-input', 'fahrenheit-input')
-  // fahrenheitInput.classList.replace('fahrenheit-input', 'celsius-input')
-});
+  // swap inputs
+  celsiusInput.setAttribute('id', 'fahrenheit-input')
+  // celsiusInput = document.getElementById('fahrenheit-input')
+  fahrenheitInput.setAttribute('id', 'celsius-input')
+  // fahrenheitInput = document.getElementById('fahrenheit-input')   
+  // remove event listeners on the inputs
+  celsiusInput.removeEventListener('input', handleCelsiusInput);
+  fahrenheitInput.removeEventListener('input', handleFahrenheitInput);
+  // update the DOM
+  celsiusInput = document.getElementById('celsius-input')  
+  fahrenheitInput = document.getElementById('fahrenheit-input')
+  // Set Event listeners on inputs
+  celsiusInput.addEventListener('input', handleCelsiusInput);
+  fahrenheitInput.addEventListener('input', handleFahrenheitInput);
+};
 
-// Listen for Celsius Inputs
-celsiusInput.addEventListener('input', e => {
+// Listen for drop-down select changes, call the handler function
+celsiusDropDown.addEventListener('change', e => dropDownHandler(e,celsiusDropDown,fahrenheitDropDown));
+fahrenheitDropDown.addEventListener('change', e => dropDownHandler(e,fahrenheitDropDown,celsiusDropDown));
 
+const handleCelsiusInput = e => {
   celsiusFormula.innerText = celsiusInput.value;
   const celsiusNumber = parseFloat(celsiusInput.value);
   fahrenheitInput.value = (celsiusNumber * 9 / 5) + 32;
@@ -52,10 +64,9 @@ celsiusInput.addEventListener('input', e => {
     fahrenheitFormula.innerText = "";
     fahrenheitInput.value= "";
   }
-})
+}
 
-// Listen for Fahrenheit Input
-fahrenheitInput.addEventListener('input', e => {
+const handleFahrenheitInput = e => {
   fahrenheitFormula.innerText = `${fahrenheitInput.value}`;
   const fahrenheitNumber = parseFloat(fahrenheitInput.value)
   // Display a maximum of 3 decimal points celsius and if the result has no decimal points, don't display them.
@@ -73,9 +84,22 @@ fahrenheitInput.addEventListener('input', e => {
     celsiusInput.value = "";
     celsiusFormula.innerText = "";
   }
-})
+}
+
+// Listen for Celsius Inputs
+celsiusInput.addEventListener('input', handleCelsiusInput);
+
+// Listen for Fahrenheit Input
+fahrenheitInput.addEventListener('input', handleFahrenheitInput);
 
 // (°F − 32) × 5/9 = °C
 
-
+//working on a function to flip values
+// function flipValues(firstValue, secondValue) {
+//   console.log("called this function")
+//   // let temp = firstValue;
+//   // firstValue = secondValue;
+//   // secondValue = temp;
+//   // console.log(firstValue, secondValue)  
+// }
 
