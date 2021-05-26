@@ -9,28 +9,35 @@ body {
     
 }
 
-.form-container {
+.main-box-container {
     display: flex;
     flex-direction: column;
+    /* flex-wrap: wrap; */
     justify-content: center;
     align-items: center;
     /* width: clamp(100px, 600px, 600px); */
-    width: 600px;
-    height: 300px;
+    /* width: 600px;
+    height: 300px; */
     border: 1px solid #dfe1e5;
     border-radius: 8px;
-    padding: 50px;
+    padding: 100px 50px;
+    margin-top: 10px;
 }
 
-form {
+.main-box {
+    position: relative;
     display: flex;
+    /* width: 600px;
+    height: 300px; */
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-
+    align-items: center;   
 }
 
 .input-container {
     margin: 20px;
+    display: flex;
+    align-self: center;
 }
 
 .input-column {
@@ -47,10 +54,11 @@ input {
 }
 
 .equals {
-    display: inline-block;
-    align-items: center;
-    padding: 3px;
-    margin: 3px;
+    /* I put position absolute here because the equals sign was being difficult in a responsive layout */
+    position: absolute;   
+    /* padding: 30px; */
+    padding: 30px;
+    margin: 30px;
     font-size: 36px;
     color: black;
     font-weight: bold;
@@ -59,7 +67,7 @@ input {
 .formula-info {
     display:flex;
     align-self:flex-start;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 
 .formula-highlight {
