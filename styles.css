@@ -22,6 +22,7 @@ body {
     border-radius: 8px;
     padding: 100px 50px;
     margin-top: 10px;
+    max-width: 600px;
 }
 
 .main-box {
@@ -101,4 +102,8 @@ select {
 
 option {
     font-size: 1rem;
+}
+
+.formula {
+    margin: 5px;
 }

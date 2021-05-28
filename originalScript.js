@@ -22,9 +22,8 @@ const dropDownHandler = (e, dropDownElement, otherDropDownElement) => {
   flipValues(celsiusInput, fahrenheitInput)
   // swap inputs
   celsiusInput.setAttribute('id', 'fahrenheit-input')
-  // celsiusInput = document.getElementById('fahrenheit-input')
   fahrenheitInput.setAttribute('id', 'celsius-input')
-  // fahrenheitInput = document.getElementById('fahrenheit-input')   
+
   // remove event listeners on the inputs
   celsiusInput.removeEventListener('input', handleCelsiusInput);
   fahrenheitInput.removeEventListener('input', handleFahrenheitInput);
@@ -70,7 +69,7 @@ const handleFahrenheitInput = e => {
     celsiusFormula.innerText = `${celsiusInput.value}`
   } else { 
     celsiusInput.value = "" 
-    celsiusFormula.innerText = `${""}`
+    celsiusFormula.innerText = ""
   }
   if (isNaN(fahrenheitInput.value)) {
     fahrenheitFormula.innerText = "";

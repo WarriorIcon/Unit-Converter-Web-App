@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
-	<script defer src="script.js"></script>
+	<script defer src="myRefactor.js"></script>
 	<title>Temperature Conversion C to F</title>
 </head>
 <body>
@@ -13,8 +13,8 @@
 			<div class="main-box">
 				<div class="input-container">
 					<div class="input-column">
-						<input type="text" name="celsius" id="celsius-input" value="0">
-						<select class="celsius-drop-down" id="celsius-drop-down">
+						<input type="text" data-side="left" name="celsius" id="celsius-input" value="0">
+						<select data-side="left" class="celsius-drop-down" id="celsius-drop-down">
 							<option value="celsius" selected value="celsius">Celsius</option>
 							<option value="fahrenheit">Fahrenheit</option>
 						</select>
@@ -23,8 +23,8 @@
 				<div class="equals">=</div>
 				<div class="input-container">
 					<div class="input-column">
-						<input type="text" name="fahrenheit" id="fahrenheit-input">
-						<select class="fahrenheit-drop-down" id="fahrenheit-dropdown">
+						<input type="text" data-side="right" name="fahrenheit" id="fahrenheit-input">
+						<select data-side="right" class="fahrenheit-drop-down" id="fahrenheit-dropdown">
 							<option value="fahrenheit" selected value="fahrenheit">Fahrenheit</option>
 							<option value="celsius">Celsius</option>
 						</select>
@@ -32,8 +32,11 @@
 			</div>
 		</div>
 			<div class="formula-info">
-				<p><span class="formula-highlight">Formula:</span> (<span class="celsius">0</span><strong>°C</strong> × 9/5) + 32 = <span class="fahrenheit">32</span><strong>°F</strong></p>
+				<p><span class="formula-highlight">Formula:</span> (<span data-side="left" class="text-celsius-formula">0</span><strong>°C</strong> × 9/5) + 32 = <span data-side="right" class="text-fahrenheit-formula">32</span><strong>°F</strong></p>
 			</div>
+			<p>WIP: This formula updates via a function call when you change the select:</p>
+			<strong class="formula">fff</strong>
+			<p class="formula">The challenge will be to make the F and the C boldfaced without styling the number inserted with JS or the rest of the formula (as I've done above)</p>
 		</div>
 
 </body>
