@@ -10,9 +10,11 @@
 // 7. On app launch, initalize DOM so that it matches whats in the config file
 // WIP: Change the formula with javascript when the selects change***
 
+const { Types } = require("mongoose");
+
 const inputs = document.querySelectorAll('input');
 const selects = document.querySelectorAll('select');
-const formulaNumbers = document.querySelectorAll('[class^="text"]')
+const formulaNumbers = document.querySelectorAll('[class^="number"]')
 const formula = document.querySelector('.formula')
 
 // Our config object is the source of all truth
@@ -39,7 +41,7 @@ function convertToCelsius(val) {
 * This function uses the input elements' data-side to determines which calculation to run from
 * the config object. It accesses config conversion key which stores the specific function to use for that side.
 */
-function determineSideAndCalculate(el) {
+function calculate(el) {
   console.log(el.dataset.side)
   return config[el.dataset.side].conversion(el.value)
 }
@@ -62,8 +64,9 @@ function updateInputElements() {
 
 // get values from config object and put into formula-text
 function updateFormulaNumber() {
-  formulaNumbers.forEach( text => {
-    text.innerText = config[text.dataset.side].formulaNumber
+  formulaNumbers.forEach( number => {
+    config[number.dataset.side].formulaNumber
+    number.innerText = config[number.dataset.side].formulaNumber
   } )
 }
 // update select value with config info
@@ -79,7 +82,6 @@ function flipSides() {
   config.right = temp;
   console.log("working on this")
   updateSelectElements()
-  updateInputElements()
   updateFormulaNumber()
   updateFormula()
 }
@@ -96,7 +98,7 @@ function updateFormula() {
 // 2. Updates the config object with the values
 // 3. Takes the config values and updates the both Input Elements with them
 inputs.forEach(input => input.addEventListener('input', e => {
-  const conversion = determineSideAndCalculate(e.target)
+  const conversion = calculate(e.target)
   updateConfigObject(e.target, conversion)
   updateInputElements()
   updateFormulaNumber()
@@ -104,9 +106,13 @@ inputs.forEach(input => input.addEventListener('input', e => {
   updateSelectElements()
 }))
 
-//update config object on select drop-down change
+/* update config object on select drop-down change
+ * this needs to not flip the input.values, but reperform a calculation with the input values of the
+ * newly updated select types. */
 selects.forEach(select => select.addEventListener('change', e => {
   flipSides()
+  // const conversion = calculate(e.dataset.side)
+  // updateConfigObject(e.target, conversion)
   updateFormulaNumber()
   updateFormula()
 }))
@@ -115,6 +121,5 @@ window.addEventListener('load', () => {
   updateInputElements();
   updateSelectElements();
   updateFormula()
-  const butt = "0"
-  formula.innerHTML = `(${butt} <b>°C</b> * 9 / 5) + 32 = Number<b>°F</b> `
+  formula.innerHTML = `(0 <b>°C</b> * 9 / 5) + 32 = Number<b>°F</b> `
 });
