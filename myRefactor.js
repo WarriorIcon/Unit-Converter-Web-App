@@ -12,18 +12,15 @@
 
 const inputs = document.querySelectorAll('input');
 const selects = document.querySelectorAll('select');
-const formulaTexts = document.querySelectorAll('[class^="text"]')
-const celsiusFormula = `(celsiusNumber * 9 / 5) + 32`;
-const fahrenheitFormula = `(fahrenheitNumber - 32) * 5 / 9`;
+const formulaNumbers = document.querySelectorAll('[class^="text"]')
 const formula = document.querySelector('.formula')
 
 // Our config object is the source of all truth
 const config = {
   left: {
-    value: null, type: "celsius", conversion: convertToFahrenheit, formulaText: null, formula: celsiusFormula
-  },
+    value: null, type: "celsius", conversion: convertToFahrenheit, formulaNumber: null },  
   right: {
-    value: null, type: "fahrenheit", conversion: convertToCelsius, formulaText: null, formula: fahrenheitFormula},
+    value: null, type: "fahrenheit", conversion: convertToCelsius, formulaNumber: null }
 }
 
 function convertToFahrenheit(val) {
@@ -52,7 +49,7 @@ function updateConfigObject(el, conversion) {
    const inputSide = el.dataset.side
    for (let side in config) {
     config[side].value = inputSide === side ? el.value : conversion;
-    config[side].formulaText = config[side].value
+    config[side].formulaNumber = config[side].value
   } 
 }
 
@@ -64,9 +61,9 @@ function updateInputElements() {
 }
 
 // get values from config object and put into formula-text
-function updateFormulaText() {
-  formulaTexts.forEach( text => {
-    text.innerText = config[text.dataset.side].formulaText
+function updateFormulaNumber() {
+  formulaNumbers.forEach( text => {
+    text.innerText = config[text.dataset.side].formulaNumber
   } )
 }
 // update select value with config info
@@ -83,13 +80,15 @@ function flipSides() {
   console.log("working on this")
   updateSelectElements()
   updateInputElements()
-  updateFormulaText()
+  updateFormulaNumber()
+  updateFormula()
 }
 
+// perhaps some wonky logic in here? Something isn't updating.
 function updateFormula() {
   if (config.left.type === "celsius") {
-    formula.innerText = celsiusFormula
-  } else formula.innerText = fahrenheitFormula
+    formula.innerHTML = `(${config.left.formulaNumber}<b>°C</b> * 9 / 5) + 32 = ${config.right.formulaNumber}<b>°F</b>`
+  } else formula.innerHTML = `(${config.right.formulaNumber}<b>°F</b> - 32) * 5 / 9 = ${config.left.formulaNumber}<b>°C</b>`
 }
 
 // When the user inputs a value into the input element, this function
@@ -100,18 +99,22 @@ inputs.forEach(input => input.addEventListener('input', e => {
   const conversion = determineSideAndCalculate(e.target)
   updateConfigObject(e.target, conversion)
   updateInputElements()
-  updateFormulaText()
+  updateFormulaNumber()
+  updateFormula()
   updateSelectElements()
 }))
 
 //update config object on select drop-down change
 selects.forEach(select => select.addEventListener('change', e => {
   flipSides()
+  updateFormulaNumber()
   updateFormula()
 }))
 
 window.addEventListener('load', () => {
   updateInputElements();
   updateSelectElements();
-  formula.innerText = celsiusFormula;
+  updateFormula()
+  const butt = "0"
+  formula.innerHTML = `(${butt} <b>°C</b> * 9 / 5) + 32 = Number<b>°F</b> `
 });
