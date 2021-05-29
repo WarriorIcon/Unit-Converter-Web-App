@@ -10,7 +10,7 @@
 // 7. On app launch, initalize DOM so that it matches whats in the config file
 // WIP: Change the formula with javascript when the selects change***
 
-const { Types } = require("mongoose");
+
 
 const inputs = document.querySelectorAll('input');
 const selects = document.querySelectorAll('select');
