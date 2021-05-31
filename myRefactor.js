@@ -1,53 +1,52 @@
-// Refactor design:
-// 1. create a config object and use data attributes to store the DOM data in there as our source of all truth
-// 2. forEach input add an event listener to call a calculate function on input event
-// 3. determineAndCalculate(el) determines which input side is being used and 
-//    calls the conversion function stored in the config on the input element and returns it
-// 4. Call an updateDataObject function to update the config file with current input element value and 
-//  the current converterd value for the other element.
-// 5. Use forEach to to update Input.values with data from dataobject config
-// 6. listen for dropdown change and call flipsides function
-// 7. On app launch, initalize DOM so that it matches whats in the config file
-// WIP: Change the formula with javascript when the selects change***
-
-
-
+// refactor
 const inputs = document.querySelectorAll('input');
 const selects = document.querySelectorAll('select');
-const formulaNumbers = document.querySelectorAll('[class^="number"]')
 const formula = document.querySelector('.formula')
 
 // Our config object is the source of all truth
-const config = {
-  left: {
-    value: null, type: "celsius", conversion: convertToFahrenheit, formulaNumber: null },  
-  right: {
-    value: null, type: "fahrenheit", conversion: convertToCelsius, formulaNumber: null }
+let config = {
+  left: { value: null, type: "celsius", conversion: 'toFahrenheit', formulaNumber: null },  
+  right: {value: null, type: "fahrenheit", conversion: 'toCelsius', formulaNumber: null },
 }
 
-function convertToFahrenheit(val) {
-  const celsiusNumber = parseFloat(val);
-  // celsiusFormula.innerText = celsiusNumber;  
-  return (celsiusNumber * 9 / 5) + 32;
+const conversions = {
+  toFahrenheit(val) {
+    const celsiusNumber = parseFloat(val);
+    // celsiusFormula.innerText = celsiusNumber;  
+    return parseFloat(((celsiusNumber * 9 / 5) + 32).toFixed(3));
+  },
+
+  toCelsius(val) {
+    const fahrenheitNumber = parseFloat(val)  
+    // Display a maximum of 3 decimal points celsius and if the result has no decimal points, don't display them.
+    return parseFloat(((fahrenheitNumber - 32) * 5 / 9).toFixed(3));
+  }
 }
 
-function convertToCelsius(val) {
-  const fahrenheitNumber = parseFloat(val)  
-  // Display a maximum of 3 decimal points celsius and if the result has no decimal points, don't display them.
-  return parseFloat(((fahrenheitNumber - 32) * 5 / 9).toFixed(3));
+function checkRegex(value) {
+  // Check that input numbers validate via regular expression & handle potential NaN output. 
+  const regex = /[+-]?([0-9]*[.])?[0-9]+/; 
+  if (String(value).match(regex) && !isNaN(value)) {    
+    return value
+  } else { 
+    return value = false
+  }
 }
 
 /*
 * This function uses the input elements' data-side to determines which calculation to run from
 * the config object. It accesses config conversion key which stores the specific function to use for that side.
 */
-function calculate(el) {
-  console.log(el.dataset.side)
-  return config[el.dataset.side].conversion(el.value)
+function calculate(side, value) {
+  value = checkRegex(value)
+  if (value !== false) {
+    const conversion = conversions[config[side].conversion]
+    return conversion(value)
+  } else return ""
 }
 
-// update the config object with out calculated values
-function updateConfigObject(el, conversion) {
+// update the config object with the input value and the converted value for the other
+function updateConfigObjectInputValues(el, conversion) {
    const inputSide = el.dataset.side
    for (let side in config) {
     config[side].value = inputSide === side ? el.value : conversion;
@@ -59,16 +58,9 @@ function updateConfigObject(el, conversion) {
 function updateInputElements() {
   inputs.forEach(input => {
     input.value = config[input.dataset.side].value
-  })
+  }) 
 }
 
-// get values from config object and put into formula-text
-function updateFormulaNumber() {
-  formulaNumbers.forEach( number => {
-    config[number.dataset.side].formulaNumber
-    number.innerText = config[number.dataset.side].formulaNumber
-  } )
-}
 // update select value with config info
 function updateSelectElements() {
   selects.forEach(select => {
@@ -76,50 +68,66 @@ function updateSelectElements() {
   })
 }
 
-function flipSides() {
-  const temp = {...config.left};
-  config.left = {...config.right};
-  config.right = temp;
-  console.log("working on this")
-  updateSelectElements()
-  updateFormulaNumber()
-  updateFormula()
-}
-
-// perhaps some wonky logic in here? Something isn't updating.
+// Update the DOM formula numbers with value from the config obkect
 function updateFormula() {
+  const left = isNaN(left) ? ' ' : config.left.formulaNumber
+  const right = isNaN(right) ? ' ' : config.left.formulaNumber
+
   if (config.left.type === "celsius") {
-    formula.innerHTML = `(${config.left.formulaNumber}<b>°C</b> * 9 / 5) + 32 = ${config.right.formulaNumber}<b>°F</b>`
-  } else formula.innerHTML = `(${config.right.formulaNumber}<b>°F</b> - 32) * 5 / 9 = ${config.left.formulaNumber}<b>°C</b>`
+    formula.innerHTML = `(${left}<b>°C</b> * 9 / 5) + 32 = ${right}<b>°F</b>`
+  } else formula.innerHTML = `(${left}<b>°F</b> - 32) * 5 / 9 = ${right}<b>°C</b>`
 }
 
-// When the user inputs a value into the input element, this function
-// 1. converts the temperature
-// 2. Updates the config object with the values
-// 3. Takes the config values and updates the both Input Elements with them
+/*
+* When the user inputs a value into the input element, this function
+* 1. converts the temperature
+* 2. Updates the config object with the values
+* 3. Takes the config values and updates the both Input Elements with them
+*/
 inputs.forEach(input => input.addEventListener('input', e => {
-  const conversion = calculate(e.target)
-  updateConfigObject(e.target, conversion)
-  updateInputElements()
-  updateFormulaNumber()
-  updateFormula()
-  updateSelectElements()
+  const el = e.target;
+  const conversion = calculate(el.dataset.side, el.value);
+  updateConfigObjectInputValues(e.target, conversion)
+  updateInputElements();
+  updateFormula();
 }))
 
-/* update config object on select drop-down change
- * this needs to not flip the input.values, but reperform a calculation with the input values of the
- * newly updated select types. */
+function getOtherSide(side) {
+  return side === 'left' ? 'right' : 'left'
+}
+/*
+ * HTML selectors will flip the calculations when changed so 
+ * the new conversion value is displayed for the corresponding input.
+ * The `config` object is reassigned to a new object containing all of the
+ * updated data.
+*/
 selects.forEach(select => select.addEventListener('change', e => {
-  flipSides()
-  // const conversion = calculate(e.dataset.side)
-  // updateConfigObject(e.target, conversion)
-  updateFormulaNumber()
+  const el = e.target
+  const side = e.target.dataset.side
+  const otherSide = getOtherSide(side)
+  const conversion = calculate(otherSide, config[side].value)
+  config = {
+    [side]: {
+      value: config[side].value,
+      type: el.value,
+      conversion: config[otherSide].conversion,
+      formulaNumber: config[side].value,
+    },
+    [otherSide]: {
+      value: conversion,
+      type: config[side].type,
+      conversion: config[side].conversion,
+      formulaNumber: conversion,
+    },
+  };
+  updateInputElements();
+  updateSelectElements();
   updateFormula()
 }))
 
 window.addEventListener('load', () => {
   updateInputElements();
   updateSelectElements();
-  updateFormula()
-  formula.innerHTML = `(0 <b>°C</b> * 9 / 5) + 32 = Number<b>°F</b> `
+  // updateFormula()
+  formula.innerHTML = `(0<b>°C</b> * 9 / 5) + 32 = 32<b>°F</b> `
 });
