@@ -1,4 +1,10 @@
 /* need to add some responsiveness css for inputs on mobile */
+
+*, *::before, *::after {
+    /* box-sizing: border-box; */
+    font-family: Roboto, Arial, sans-serif;
+}
+
 body {
     position: relative;
     display: flex;
@@ -7,6 +13,10 @@ body {
     /* align-items: center; */
     height: clamp(75vh, 75vh, 75vh);
     
+}
+
+.headline {
+    text-align: center;
 }
 
 .main-box-container {
@@ -18,10 +28,14 @@ body {
     /* width: clamp(100px, 600px, 600px); */
     /* width: 600px;
     height: 300px; */
-    border: 1px solid #dfe1e5;
+    border: 1px solid black /*#dfe1e5*/;
+    box-shadow:
+    inset 0 -3em 3em rgba(0,0,0,0.1),
+          0 0  0 2px rgb(255,255,255),
+          0.3em 0.3em 1em rgba(0,0,0,0.3);
     border-radius: 8px;
-    padding: 100px 50px;
-    margin-top: 10px;
+    padding: 50px 50px;
+    margin-top: 100px;
     max-width: 600px;
 }
 
@@ -58,11 +72,10 @@ input {
     /* I put position absolute here because the equals sign was being difficult in a responsive layout */
     position: absolute;   
     /* padding: 30px; */
-    padding: 30px;
-    margin: 30px;
-    font-size: 36px;
+    /* padding: 30px;
+    margin: 30px; */
+    font-size: 32px;
     color: black;
-    font-weight: bold;
 }
 
 .formula-info {
@@ -86,6 +99,7 @@ label {
 }
 
 select {
+    font-family: Roboto;
     background: #f8f9fa;
     border: 2px solid #dadce0;
     font-size: 1.3rem;

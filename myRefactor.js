@@ -5,8 +5,8 @@ const formula = document.querySelector('.formula')
 
 // Our config object is the source of all truth
 let config = {
-  left: { value: null, type: "celsius", conversion: 'toFahrenheit', formulaNumber: null },  
-  right: {value: null, type: "fahrenheit", conversion: 'toCelsius', formulaNumber: null },
+  left: { value: 0, type: "celsius", conversion: 'toFahrenheit', formulaNumber: null },  
+  right: {value: 32, type: "fahrenheit", conversion: 'toCelsius', formulaNumber: null },
 }
 
 const conversions = {
@@ -70,8 +70,8 @@ function updateSelectElements() {
 
 // Update the DOM formula numbers with value from the config obkect
 function updateFormula() {
-  const left = isNaN(left) ? ' ' : config.left.formulaNumber
-  const right = isNaN(right) ? ' ' : config.left.formulaNumber
+  const left = isNaN(config.left.value) ? ' ' : config.left.formulaNumber
+  const right = isNaN(config.right.value) ? ' ' : config.right.formulaNumber
 
   if (config.left.type === "celsius") {
     formula.innerHTML = `(${left}<b>°C</b> * 9 / 5) + 32 = ${right}<b>°F</b>`
