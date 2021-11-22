@@ -1,5 +1,10 @@
 /* 
-Please disregard this js file. The code below was my very first attempt of this project and I wanted to keep it as a memento of writing my first personal project code. Soonafter writing this, I completely refactored this code using a React.js coding paradigm contained in 'myRefactor.js'. That's the code that this application actually uses :-) 
+Please disregard this js file. The code below was my very first 
+attempt of this project and I wanted to keep it as a memento of 
+writing my first personal project code. Soonafter writing this,
+I completely refactored this code using a React.js coding paradigm 
+contained in 'myRefactor.js'. That's the code that this application 
+actually uses :-) 
 */
 
 let celsiusInput = document.getElementById('celsius-input')
