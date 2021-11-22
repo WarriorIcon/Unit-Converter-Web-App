@@ -1,8 +1,7 @@
 /* 
-* This is the code the application actually uses
-* The "originalScript.js" file is just a memento of my first attempt
-* at making a project myself. 
-* Soonafter I  refactored the code using a React.js code paradigm and
+* This is the code the application actually uses!
+* The "originalScript.js" file is just a memento of my first attempt at making a project myself. 
+* Soonafter, I  refactored the code using a React.js coding paradigm and
 * that's what you see in this file here. 
 */
 const inputs = document.querySelectorAll('input');
