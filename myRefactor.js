@@ -1,4 +1,10 @@
-// refactor
+/* 
+* This is the code the application actually uses
+* The "originalScript.js" file is just a memento of my first attempt
+* at making a project myself. 
+* Soonafter I  refactored the code using a React.js code paradigm and
+* that's what you see in this file here. 
+*/
 const inputs = document.querySelectorAll('input');
 const selects = document.querySelectorAll('select');
 const formula = document.querySelector('.formula')
@@ -11,8 +17,7 @@ let config = {
 
 const conversions = {
   toFahrenheit(val) {
-    const celsiusNumber = parseFloat(val);
-    // celsiusFormula.innerText = celsiusNumber;  
+    const celsiusNumber = parseFloat(val); 
     return parseFloat(((celsiusNumber * 9 / 5) + 32).toFixed(3));
   },
 
